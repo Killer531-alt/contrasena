@@ -6,7 +6,8 @@ RUN apt-get update && apt-get install -y \
     build-essential \
     libssl-dev \
     libffi-dev \
-    libmysqlclient-dev \
+    libmariadb-dev-compat \
+    libmariadb-dev \
     && rm -rf /var/lib/apt/lists/*
 
 # Configura el directorio de trabajo
@@ -23,3 +24,4 @@ EXPOSE 8000
 
 # Comando para ejecutar la aplicación
 CMD ["gunicorn", "--bind", "0.0.0.0:8000", "generador_contrasenas.wsgi:application"]
+
