@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generador de Contraseñas Seguras</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body class="bg-dark text-white">
+    <div class="container mt-5">
+        <div class="card bg-secondary text-white">
+            <div class="card-body">
+                <h1 class="text-center">Generador de Contraseñas Seguras</h1>
+                <form method="POST" class="mt-4">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="longitud">Longitud de la contraseña:</label>
+                        <input type="number" class="form-control" id="longitud" name="longitud" min="8" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Generar</button>
+                </form>
+                {% if contrasena %}
+                <div class="mt-4">
+                    <div class="alert alert-info">
+                        <strong>Contraseña generada:</strong> {{ contrasena }}
+                    </div>
+                    <button class="btn btn-success btn-block" onclick="copiarTexto()">Copiar al portapapeles</button>
+                </div>
+                {% endif %}
+                {% if error %}
+                <div class="mt-4">
+                    <div class="alert alert-danger">
+                        <strong>Error:</strong> {{ error }}
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function copiarTexto() {
+            const contrasena = document.querySelector('.alert-info').textContent.split(':')[1].trim();
+            navigator.clipboard.writeText(contrasena).then(() => {
+                alert('Contraseña copiada al portapapeles');
+            });
+        }
+    </script>
+</body>
+</html>
